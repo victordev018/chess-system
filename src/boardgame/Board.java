@@ -28,4 +28,14 @@ public class Board {
     public void setColumns(Integer columns) {
         this.columns = columns;
     }
+
+    // método que retorna o objeto Piece em que se encontra em uma linha e coluna passadas como argumento
+    public Piece piece(int row, int column){
+        return pieces[row][column];
+    }
+
+    // sobrecarga: retorna o objeto Piece baseado em uma Position passada como argumento
+    public Piece piece(Position position){
+        return pieces[position.getRow()][position.getColumn()];
+    }
 }
