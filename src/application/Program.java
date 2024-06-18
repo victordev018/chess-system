@@ -1,14 +1,13 @@
 package application;
 
-import boardgame.Position;
+import boardgame.Board;
 
 public class Program {
 
     public static void main (String[] args){
 
-        // testando instanciação do objeto da classe Position
-        Position pos = new Position(3, 5);
-        System.out.print(pos);
+        // Instanciando um novo tabuleiro
+        Board board = new Board(8, 8);
 
     }
 
