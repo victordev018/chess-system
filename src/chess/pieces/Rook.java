@@ -17,4 +17,12 @@ public class Rook extends ChessPiece {
     public String toString(){
         return "R";     // indentificador da peça Torre (Rook)
     }
+
+    // implementação da movimentação da peça da Torre
+    @Override
+    public boolean[][] possibleMove() {
+        // criando matriz boolena de mesma dimensão que o tabuleiro, por padrão inicia-se todos falsos
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        return mat;
+    }
 }

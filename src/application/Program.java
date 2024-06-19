@@ -32,12 +32,15 @@ public class Program {
             }
             // caso levante uma exceção
             catch (ChessException e){
+                // exbição de mensagem de exceção
                 System.out.print(e.getMessage());
                 in.nextLine();
                 in.nextLine();
             }
             catch (InputMismatchException e){
+                // exibição de mensagem da exceção
                 System.out.print(e.getMessage());
+                // aguardando pressionar enter
                 in.nextLine();
                 in.nextLine();
             }

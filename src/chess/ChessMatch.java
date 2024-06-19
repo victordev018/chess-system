@@ -59,6 +59,12 @@ public class ChessMatch {
         if (!board.thereIsAPiece(source)){
             throw new ChessException("There is not a piece on source position");
         }
+        // verificando se no tabuleiro, a peça na posição de origem não possue movimento possivel
+        if (!board.piece(source).IsThereAnyPossibleMove()){
+            // lançara uma exceção
+            // não há movimento possível para a peça escolhida
+            throw new ChessException("There is no possible move for the chosen piece");
+        }
     }
 
     // método para colocar uma nova peça no xadrez baseado em uma posição de xadrez (a1-h8)

@@ -17,4 +17,12 @@ public class King extends ChessPiece {
     public String toString(){
         return "K";     // indentificador da peça Rei (king)
     }
+
+    // implementação da movientação da peça do Rei
+    @Override
+    public boolean[][] possibleMove() {
+        // criando matriz boolena de mesma dimensão que o tabuleiro, por padrão inicia-se todos falsos
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        return mat;
+    }
 }
