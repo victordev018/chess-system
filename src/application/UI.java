@@ -1,7 +1,11 @@
 package application;    // aplicação
 
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 // classe responsável pela interface de usuário
 public class UI {
@@ -28,6 +32,20 @@ public class UI {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+    // método que faz a leitura da coordenada e retorna um ChessPosition
+    public static ChessPosition readChessPosition(Scanner in){
+        try {
+            String s = in.next();
+            char column = s.charAt(0);
+            int row = Integer.parseInt(s.substring(1));
+            return new ChessPosition(column, row);
+        }
+        // caso haja um problema na leitura
+        catch (RuntimeException e){
+            throw new InputMismatchException("Error reading ChessPosition. valid value are from a1 to h8.");
+        }
+    }
 
     // método para fazer a impressão do tabuleiro
     public static void printBoard(ChessPiece[][] pieces){
