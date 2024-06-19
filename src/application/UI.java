@@ -60,7 +60,22 @@ public class UI {
         for (int r = 0; r < pieces.length; r++){
             System.out.print((8-r) + " ");  // imprime o número de cada linha
             for (int c = 0; c < pieces.length; c++){
-                printPiece(pieces[r][c]);
+                printPiece(pieces[r][c], false);    // não pode imprimir a cor do background
+            }
+            // quando terminar de imprimir a linha taual, quebra a linha
+            System.out.println();
+        }
+        // quando terminar todas as linhas
+        System.out.print("  a b c d e f g h");
+    }
+
+    // sobrecarga do método para fazer a impressão do tabuleiro, agora imprimindo posições possiveis
+    public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves){
+        // para cada linha
+        for (int r = 0; r < pieces.length; r++){
+            System.out.print((8-r) + " ");  // imprime o número de cada linha
+            for (int c = 0; c < pieces.length; c++){
+                printPiece(pieces[r][c], possibleMoves[r][c]);     // pode imprimir a cor do background, se for true
             }
             // quando terminar de imprimir a linha taual, quebra a linha
             System.out.println();
@@ -70,10 +85,14 @@ public class UI {
     }
 
     // método para fazer a impressão de uma única peça
-    public static void printPiece(ChessPiece piece){
+    public static void printPiece(ChessPiece piece, boolean background){
+        // verificando se pode pintar o fundo da peça
+        if (background){
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
         // se não existir peça
         if (piece == null){
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         }
         // se eixistir a peça
         else{

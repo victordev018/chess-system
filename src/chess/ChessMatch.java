@@ -32,6 +32,16 @@ public class ChessMatch {
         return mat;
     }
 
+    // método que pega uma matriz de movimentos possiveis dada uma posição
+    public boolean[][] possibleMover(ChessPosition sourcePosition){
+        // downcast de ChessPosition para Position
+        Position position = sourcePosition.toPosition();
+        // validando posição de origem
+        validateSourcePosition(position);
+        // retorna uma matriz de possiveis movimentos para a peça selceionada
+        return board.piece(position).possibleMove();
+    }
+
     // método para executar a movimento de xadrez
     public ChessPiece performChessMove(ChessPosition sorcePosition, ChessPosition targetPosition){
         Position source = sorcePosition.toPosition();    // posição de origem
