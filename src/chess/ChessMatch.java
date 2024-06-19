@@ -10,13 +10,26 @@ import chess.pieces.Rook;
 public class ChessMatch {
 
     // atributos
+    private int turn;       // vez
+    private Color currentPlayer;    // jogador atual
     private Board board;    // tabuleiro
 
     // construtor
     public ChessMatch(){
         // a partida sabe a dimensão do tabuleiro
         board = new Board(8, 8);
+        this.turn = 1;
+        this.currentPlayer = Color.WHITE;
         initialSetup();
+    }
+
+    // geters
+    public int getTurn(){
+        return turn;
+    }
+
+    public Color getCurrentPlayer(){
+        return currentPlayer;
     }
 
     // método para retornar uma matriz de CheesPiece (Peças de xadrez)
@@ -49,6 +62,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
+        nextTurn(); // trocando o a vez
         return (ChessPiece) capturedPiece;
     }
 
@@ -70,6 +84,12 @@ public class ChessMatch {
         if (!board.thereIsAPiece(source)){
             throw new ChessException("There is not a piece on source position");
         }
+        // verificando se a peça selecionada tem cor diferente da do player atual
+        if (currentPlayer != ((ChessPiece)board.piece(source)).getColor()){
+            // lançara uma exceção
+            // a peça escolhida não é sua
+            throw new ChessException("The chosen piece is not yours");
+        }
         // verificando se no tabuleiro, a peça na posição de origem não possue movimento possivel
         if (!board.piece(source).IsThereAnyPossibleMove()){
             // lançara uma exceção
@@ -86,6 +106,15 @@ public class ChessMatch {
             // a peça escolhida não pode se mover para a posição de destino
             throw new ChessException("The chosen piece can't move to target position");
         }
+    }
+
+    // método para fazer a troca de vez de jogador
+    private void nextTurn(){
+        // incrementa o turn
+        turn++;
+        // troca o currentPlayer
+        // se o player atual for branco, atribua preto, senão atribua branco
+        currentPlayer = (currentPlayer == Color.WHITE)? Color.BLACK: Color.WHITE;
     }
 
     // método para colocar uma nova peça no xadrez baseado em uma posição de xadrez (a1-h8)

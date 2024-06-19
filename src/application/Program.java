@@ -21,7 +21,7 @@ public class Program {
                 // limpando a tela
                 UI.clearScreen();
                 // exibindo o tabuleiro
-                UI.printBoard(chessMatch.getPieces());
+                UI.printMatch(chessMatch);
                 System.out.print("\nSource pos: ");
                 ChessPosition source = UI.readChessPosition(in);
 

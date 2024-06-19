@@ -1,5 +1,6 @@
 package application;    // aplicação
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -67,6 +68,13 @@ public class UI {
         }
         // quando terminar todas as linhas
         System.out.print("  a b c d e f g h");
+    }
+
+    // método para imprimir a partida
+    public static void printMatch(ChessMatch chessMatch){
+        printBoard(chessMatch.getPieces());
+        System.out.println("\n\nTurn: " + chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
     }
 
     // sobrecarga do método para fazer a impressão do tabuleiro, agora imprimindo posições possiveis
