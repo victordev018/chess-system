@@ -30,6 +30,12 @@ public class Position {
         this.column = column;
     }
 
+    // método para definir novos valores para linha e coluna
+    public void setValue(int row, int column){
+        this.row = row;
+        this.column = column;
+    }
+
     // sobreposição do toString
     @Override
     public String toString(){

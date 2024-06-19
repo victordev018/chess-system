@@ -37,6 +37,7 @@ public class ChessMatch {
         Position source = sorcePosition.toPosition();    // posição de origem
         Position target = targetPosition.toPosition();  // posição destino
         validateSourcePosition(source);
+        validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
         return (ChessPiece) capturedPiece;
     }
@@ -64,6 +65,16 @@ public class ChessMatch {
             // lançara uma exceção
             // não há movimento possível para a peça escolhida
             throw new ChessException("There is no possible move for the chosen piece");
+        }
+    }
+
+    // método para validar a posição de destino em relação a posição de origem
+    public void validateTargetPosition(Position source, Position target){
+        // verificando se a peça de origem não pode ser movida para a posição de destino
+        if (!board.piece(source).possibleMove(target)){
+            // lançara uma exceção
+            // a peça escolhida não pode se mover para a posição de destino
+            throw new ChessException("The chosen piece can't move to target position");
         }
     }
 
