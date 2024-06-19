@@ -31,10 +31,15 @@ public class ChessMatch {
         return mat;
     }
 
+    // método para colocar uma nova peça no xadrez baseado em uma posição de xadrez (a1-h8)
+    public void placeNewPiece(char column, int row, ChessPiece piece){
+        board.placePiece(piece, new ChessPosition(column, row).toPosition());
+    }
+
     // método para fazer a configuração inicial do tebauleiro
     private void initialSetup(){
-        board.placePiece(new King(board, Color.BLACK), new Position(0, 5));
-        board.placePiece(new Rook(board, Color.WHITE), new Position(7, 2));
+        placeNewPiece('f', 8,new King(board, Color.BLACK));
+        placeNewPiece('c', 1, new Rook(board, Color.WHITE));
     }
 
 }
