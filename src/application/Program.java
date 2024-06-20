@@ -19,7 +19,9 @@ public class Program {
         List<ChessPiece> captured = new ArrayList<ChessPiece>();
         // Instanciando uma nova partida
         ChessMatch chessMatch = new ChessMatch();
-        while (true) {
+
+        // enquanto a partida não estiver em cheque mate
+        while (!chessMatch.getCheckMate()) {
             try {
                 // limpando a tela
                 UI.clearScreen();
@@ -61,6 +63,10 @@ public class Program {
                 in.nextLine();
             }
         }
+
+        // partida finalizada
+        UI.clearScreen();
+        UI.printMatch(chessMatch, captured);
     }
 
 }
