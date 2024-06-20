@@ -6,6 +6,9 @@ import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // classe referente a Partida de xadrez
 public class ChessMatch {
 
@@ -13,6 +16,12 @@ public class ChessMatch {
     private int turn;       // vez
     private Color currentPlayer;    // jogador atual
     private Board board;    // tabuleiro
+
+    // lista de peças no tabuleiro
+    List<Piece> piecesOnTheBoard = new ArrayList<Piece>();
+    // lista de peças capturadas
+    List<Piece> capturedPieces = new ArrayList<Piece>();
+
 
     // construtor
     public ChessMatch(){
@@ -74,6 +83,13 @@ public class ChessMatch {
         Piece capturedPiece = board.removePiece(target);
         // colocando peça na posição de destino
         board.placePiece(p, target);
+        // verificando se houve peça capturada
+        if (capturedPiece != null){
+            // remove da lista de peças no tabuleiro
+            piecesOnTheBoard.remove(capturedPiece);
+            // e adiciona a peça na lista de peças capturadas
+            capturedPieces.add(capturedPiece);
+        }
         // retornando possivel peça capturada
         return  capturedPiece;
     }
@@ -119,7 +135,10 @@ public class ChessMatch {
 
     // método para colocar uma nova peça no xadrez baseado em uma posição de xadrez (a1-h8)
     public void placeNewPiece(char column, int row, ChessPiece piece){
+        // adicionando nova peça no tabuleiro
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
+        // aidcionando peça na lista de peças no tabuleiro
+        piecesOnTheBoard.add(piece);
     }
 
     // método para fazer a configuração inicial do tebauleiro

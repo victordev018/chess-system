@@ -5,8 +5,11 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 // classe responsável pela interface de usuário
 public class UI {
@@ -71,10 +74,11 @@ public class UI {
     }
 
     // método para imprimir a partida
-    public static void printMatch(ChessMatch chessMatch){
-        printBoard(chessMatch.getPieces());
-        System.out.println("\n\nTurn: " + chessMatch.getTurn());
-        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+    public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured){
+        printBoard(chessMatch.getPieces());     // imprime o tabuleiro
+        printCapturedPiece(captured);           // imprime as peças capturadas
+        System.out.println("\nTurn: " + chessMatch.getTurn());        // imprime turno
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());     // imprime player atual
     }
 
     // sobrecarga do método para fazer a impressão do tabuleiro, agora imprimindo posições possiveis
@@ -114,6 +118,28 @@ public class UI {
         }
         // espaçamento entre peças
         System.out.print(" ");
+    }
+
+    // método para imprimir as peças capturadas
+    private static void printCapturedPiece(List<ChessPiece> captured){
+        // filtrando a peças brancas em uma lista
+        List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
+        // filtrando as peças pretas em uma lista
+        List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
+
+        // exibindo peças cappturadas
+        System.out.println("\n\nCaptured pieces:");
+        // peças brancas
+        System.out.print("White: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(white.toArray()));
+        System.out.print(ANSI_RESET);
+
+        // peças pretas
+        System.out.print("Black: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(Arrays.toString(black.toArray()));
+        System.out.print(ANSI_RESET);
     }
 
 }
