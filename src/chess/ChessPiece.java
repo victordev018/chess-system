@@ -21,6 +21,11 @@ public abstract class ChessPiece extends Piece {
         return color;
     }
 
+    // método que retorna a posição da peça como uma posição de xadrez (ChessPosition)
+    public ChessPosition getChessPosition(){
+        return ChessPosition.fromPosition(position);
+    }
+
     // método para verificar se existe um opnente em uma determinada posição
     protected boolean isThereOpponentPiece(Position position){
         // gaurando a peça que existe na posição informada em uma variável

@@ -79,6 +79,11 @@ public class UI {
         printCapturedPiece(captured);           // imprime as peças capturadas
         System.out.println("\nTurn: " + chessMatch.getTurn());        // imprime turno
         System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());     // imprime player atual
+
+        // verificando se a partida está em cheque
+        if (chessMatch.getCheck()){
+            System.out.println("\nCHECK");
+        }
     }
 
     // sobrecarga do método para fazer a impressão do tabuleiro, agora imprimindo posições possiveis

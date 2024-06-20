@@ -36,7 +36,7 @@ public class ChessPosition {
 
     // método que retorna o retorna o a uma posição de xadrez(a1-h8) baseado em uma posição do tabuleiro(matriz)
     public static ChessPosition fromPosition (Position position){
-        return new ChessPosition((char)(position.getColumn() - 'a'), 8 - position.getRow());
+        return new ChessPosition((char)(position.getColumn() + 'a'), 8 - position.getRow());
     }
 
     // sobreposição do método toString()
