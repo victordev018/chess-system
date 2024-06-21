@@ -5,7 +5,7 @@ import boardgame.Position;
 import chess.ChessPiece;
 import chess.Color;
 
-// classe referente a peça Rei
+// classe referente a peça Cavalo
 public class Knight extends ChessPiece {
 
     // construtor
@@ -19,7 +19,7 @@ public class Knight extends ChessPiece {
         return "N";     // indentificador da peça Cavalo (Knight)
     }
 
-    // método para verificar se o Rei pode se mover
+    // método para verificar se o cavalo pode se mover
     private boolean canMove(Position position){
         // referência a Peça na posição dada
         ChessPiece p = (ChessPiece) getBoard().piece(position);
@@ -28,7 +28,7 @@ public class Knight extends ChessPiece {
     }
 
 
-    // implementação da movientação da peça do Rei
+    // implementação da movientação da peça do Cavalo
     @Override
     public boolean[][] possibleMove() {
         // criando matriz boolena de mesma dimensão que o tabuleiro, por padrão inicia-se todos falsos
@@ -37,23 +37,20 @@ public class Knight extends ChessPiece {
         // variável auxiliar para gaurdar uma posição
         Position p = new Position(0, 0);
 
-        // above    // acima
         p.setValue(position.getRow() - 1, position.getColumn() - 2);
-        // verificando se a posição existe e se o rei pode se mover
+        // verificando se a posição existe e se o cavalo pode se mover
         if (getBoard().positionExist(p) && canMove(p)){
             mat[p.getRow()][p.getColumn()] = true;
         }
 
-        // below    // abaixo
         p.setValue(position.getRow() - 2, position.getColumn() - 1);
         // verificando se a posição existe e se o rei pode se mover
         if (getBoard().positionExist(p) && canMove(p)){
             mat[p.getRow()][p.getColumn()] = true;
         }
 
-        // left    // esquerda
         p.setValue(position.getRow() - 2, position.getColumn() + 1);
-        // verificando se a posição existe e se o rei pode se mover
+        // verificando se a posição existe e se o cavalo pode se mover
         p.setValue(position.getRow() - 1, position.getColumn() - 2);
         if (getBoard().positionExist(p) && canMove(p)) {
             mat[p.getRow()][p.getColumn()] = true;
