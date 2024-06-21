@@ -5,6 +5,7 @@ import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ChessMatch {
     private boolean check;  // verifica se uma peça está em posição de check
     private boolean checkMate;    // verifica se a peça está em posição de checkMate
     private ChessPiece enPassantVulnerable;     // peça sujeita ao movimento enPassant
+    private ChessPiece promoted;        // peça suejeita  a condição de promoção (trocar a peça)
 
     // lista de peças no tabuleiro
     List<Piece> piecesOnTheBoard = new ArrayList<Piece>();
@@ -55,6 +57,10 @@ public class ChessMatch {
 
     public ChessPiece getEnPassantVulnerable(){
         return enPassantVulnerable;
+    }
+
+    public ChessPiece getPromoted(){
+        return promoted;
     }
 
     // método para retornar uma matriz de CheesPiece (Peças de xadrez)
@@ -100,6 +106,20 @@ public class ChessMatch {
             throw new ChessException("you can't put yourself in check");
         }
 
+        // #specialmove Promotion
+        promoted = null;
+        // verificando se a peça que foi movida foi um peão
+        if (movedPiece instanceof Pawn){
+            // verificando se a peça é uma torre e se a torre branca ou preta chegou no final
+            if (movedPiece.getColor() == Color.WHITE && target.getRow() == 0 ||
+                movedPiece.getColor() == Color.BLACK && target.getRow() == 7) {
+                // definndo quem foi a peça promovida
+                promoted = (ChessPiece)board.piece(target);
+                // trocando o pião por outra peça
+                promoted = replacePromotedPiece("Q");
+            }
+        }
+
         // testando se o opnente e ficou em chque
         check = testCheck(opponent(currentPlayer))? true: false;
 
@@ -124,6 +144,56 @@ public class ChessMatch {
         }
 
         return (ChessPiece) capturedPiece;
+    }
+
+    // método para fazer a troca de carta na jogada de promoção
+    public ChessPiece replacePromotedPiece(String type){
+//        // se não tiver peça promovida
+//        if (promoted == null){
+//            throw new IllegalStateException("There is no piece to be promoted");
+//        }
+//        // se o type não corresponder a nenhum dos tipos possiveis
+//        if (!type.equals("B") && !type.equals("N") && !type.equals("R") & !type.equals("Q")){
+//            throw new InvalidParameterException("Invalid type for promotion");
+//        }
+//
+//        // pegando posição da peça promovida
+//        Position pos = promoted.getChessPosition().toPosition();
+//        // removendo peça que etá na posição pos e guardando em p
+//        Piece p = board.piece(pos);
+//        // excluindo e peça p da lista de peças no tauleiro
+//        piecesOnTheBoard.remove(p);
+//        // instanciando a nova peça
+//        ChessPiece newPiece = newPiece(type, promoted.getColor());
+//        // colocando a nova peça na posição da peça promovida
+//        board.placePiece(newPiece, pos);
+//        // adicionando essa nova peça na lista de peças no tabuleiro
+//        piecesOnTheBoard.add(newPiece);
+//        return newPiece;
+        if (promoted == null) {
+            throw new IllegalStateException("There is no piece to be promoted");
+        }
+        if (!type.equals("B") && !type.equals("N") && !type.equals("R") & !type.equals("Q")) {
+            throw new InvalidParameterException("Invalid type for promotion");
+        }
+
+        Position pos = promoted.getChessPosition().toPosition();
+        Piece p = board.removePiece(pos);
+        piecesOnTheBoard.remove(p);
+
+        ChessPiece newPiece = newPiece(type, promoted.getColor());
+        board.placePiece(newPiece, pos);
+        piecesOnTheBoard.add(newPiece);
+
+        return newPiece;
+    }
+
+    // método auxiliar para instanciar uma nova peça de acordo com a letra passada
+    private ChessPiece newPiece(String type, Color color){
+        if (type.equals("B")) return new Bishop(board, color);
+        if (type.equals("N")) return new Knight(board, color);
+        if (type.equals("R")) return new Rook(board, color);
+        return new Queen(board, color);
     }
 
     // método para fazer mover a peça de uma origem para um destino
