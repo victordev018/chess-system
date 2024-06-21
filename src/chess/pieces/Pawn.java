@@ -1,6 +1,7 @@
 package chess.pieces;   // peças
 
 import boardgame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import boardgame.Board;
 import chess.Color;
@@ -8,9 +9,13 @@ import chess.Color;
 // classe referente a peça Peão
 public class Pawn extends ChessPiece {
 
+    // atributos
+    private ChessMatch chessMatch;  // dependência para a partida
+
     // construtor
-    public Pawn(Board board, Color color){
+    public Pawn(Board board, Color color, ChessMatch chessMatch){
         super(board, color);
+        this.chessMatch = chessMatch;
     }
 
     // sobreposição do método toString()
@@ -61,6 +66,33 @@ public class Pawn extends ChessPiece {
             if (getBoard().positionExist(p) && isThereOpponentPiece(p)){
                 mat[p.getRow()][p.getColumn()] = true;
             }
+
+            // #specialmove en passant White
+            // verificando se a peça esta na linha 3
+            if (position.getRow() == 3){
+                // pegando posição da peça a esquerda do nosso peão
+                Position left = new Position(position.getRow(), position.getColumn() - 1);
+                // verificação se a posição left existe, se se é uma peça openente e se é uma peça vulnerável ao movimento
+                if (getBoard().positionExist(left) &&
+                   isThereOpponentPiece(left) &&
+                   getBoard().piece(left) == chessMatch.getEnPassantVulnerable())
+                {
+                    // diagonal superior direita fica como um movimento possivel
+                    mat[left.getRow() - 1][left.getColumn()] = true;
+                }
+
+                // pegando posição da peça a esquerda do nosso peão
+                Position right = new Position(position.getRow(), position.getColumn() + 1);
+                // verificação se a posição left existe, se se é uma peça openente e se é uma peça vulnerável ao movimento
+                if (getBoard().positionExist(right) &&
+                        isThereOpponentPiece(right) &&
+                        getBoard().piece(right) == chessMatch.getEnPassantVulnerable())
+                {
+                    // diagonal superior direita fica como um movimento possivel
+                    mat[right.getRow() - 1][right.getColumn()] = true;
+                }
+            }
+
         }
         // caso a peça seja preta
         else{
@@ -95,6 +127,32 @@ public class Pawn extends ChessPiece {
             // verificando se a posição existe e se na posição existe uma outra peça
             if (getBoard().positionExist(p) && isThereOpponentPiece(p)){
                 mat[p.getRow()][p.getColumn()] = true;
+            }
+
+            // #specialmove en passant Black
+            // verificando se a peça esta na linha 3
+            if (position.getRow() == 4){
+                // pegando posição da peça a esquerda do nosso peão
+                Position left = new Position(position.getRow(), position.getColumn() - 1);
+                // verificação se a posição left existe, se se é uma peça openente e se é uma peça vulnerável ao movimento
+                if (getBoard().positionExist(left) &&
+                        isThereOpponentPiece(left) &&
+                        getBoard().piece(left) == chessMatch.getEnPassantVulnerable())
+                {
+                    // diagonal superior direita fica como um movimento possivel
+                    mat[left.getRow() + 1][left.getColumn()] = true;
+                }
+
+                // pegando posição da peça a esquerda do nosso peão
+                Position right = new Position(position.getRow(), position.getColumn() + 1);
+                // verificação se a posição left existe, se se é uma peça openente e se é uma peça vulnerável ao movimento
+                if (getBoard().positionExist(right) &&
+                        isThereOpponentPiece(right) &&
+                        getBoard().piece(right) == chessMatch.getEnPassantVulnerable())
+                {
+                    // diagonal superior direita fica como um movimento possivel
+                    mat[right.getRow() + 1][right.getColumn()] = true;
+                }
             }
         }
 
